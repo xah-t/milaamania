@@ -24,8 +24,23 @@ def create_directory_artist_album(audiofile_path):
     """Настроить проверку, при которой название альбома и исполнителя не будет противоречить правилам названия папок."""
     imposible_symbols = "\/:*?<>|"
     for i in imposible_symbols:
-        if i in audiofile.tag.album or audiofile.tag.artist or audiofile.tag.title:
-            print("Imposible symbol")
+        if i in str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title):
+            print("Imposible symbol", f"'{i}'")
+            if i in audiofile.tag.artist:
+                print("Imposible symbol in artist", f"'{i}'")
+                str_ = audiofile.tag.artist
+                audiofile.tag.artist = str_.replace(i, '')
+                audiofile.tag.save()
+            elif i in audiofile.tag.album:
+                print("Imposible symbol in album", f"'{i}'")
+                str_ = audiofile.tag.album
+                audiofile.tag.album = str_.replace(i, '')
+                audiofile.tag.save()
+            else:
+                print("Imposible symbol in title", f"'{i}'")
+                str_ = audiofile.tag.title
+                audiofile.tag.title = str_.replace(i, '')
+                audiofile.tag.save()
     if audiofile.tag is None:
         base = os.path.basename(audiofile_path)
         if not os.path.isdir(f"{folder_with_files}/Исполнитель не определен"):
