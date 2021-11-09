@@ -1,18 +1,7 @@
 import os
 import eyed3
 import tempfile
-
-
-def create_audiofiles_list(path_to_folder_with_files):
-    """Функция создания списка аудиофайлов"""
-
-    files_list = []
-    with os.scandir(path_to_folder_with_files) as files:
-        for f in files:
-            if os.path.isfile(f):
-                file_name_with_path = f"{path_to_folder_with_files}/{f.name}"
-                files_list.append(file_name_with_path)
-    return files_list
+from temp import *
 
 
 def create_directory_artist_album(audiofile_path):
@@ -20,29 +9,31 @@ def create_directory_artist_album(audiofile_path):
     """Params:
     audiofile_path:argument"""
     folder_with_files = "C:/python/milaamania/music"
-    audiofile = eyed3.load(audiofile_path)  # "music/Madelyne - Beautiful Child (Hiver Hammer remix).mp3"
-    """Настроить проверку, при которой название альбома и исполнителя не будет противоречить правилам названия папок."""
-    imposible_symbols = "\/:*?<>|"
-    for i in imposible_symbols:
-        if i in str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title):
-            print("Imposible symbol", f"'{i}'")
-            if i in audiofile.tag.artist:
-                print("Imposible symbol in artist", f"'{i}'")
-                str_ = audiofile.tag.artist
-                audiofile.tag.artist = str_.replace(i, '')
-                audiofile.tag.save()
-            elif i in audiofile.tag.album:
-                print("Imposible symbol in album", f"'{i}'")
-                str_ = audiofile.tag.album
-                audiofile.tag.album = str_.replace(i, '')
-                audiofile.tag.save()
-            else:
-                print("Imposible symbol in title", f"'{i}'")
-                str_ = audiofile.tag.title
-                audiofile.tag.title = str_.replace(i, '')
-                audiofile.tag.save()
+    base = os.path.basename(audiofile_path)
+    audiofile = eyed3.load(audiofile_path)
+
+    # """Настроить проверку, при которой название альбома и исполнителя не будет противоречить правилам названия папок."""
+    # imposible_symbols = "\/:*?<>|"
+    # for i in imposible_symbols:
+    #     if i in str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title):
+    #         print("Imposible symbol", f"'{i}'")
+    #         if i in audiofile.tag.artist:
+    #             print("Imposible symbol in artist", f"'{i}'")
+    #             str_ = audiofile.tag.artist
+    #             audiofile.tag.artist = str_.replace(i, '')
+    #             audiofile.tag.save()
+    #         elif i in audiofile.tag.album:
+    #             print("Imposible symbol in album", f"'{i}'")
+    #             str_ = audiofile.tag.album
+    #             audiofile.tag.album = str_.replace(i, '')
+    #             audiofile.tag.save()
+    #         else:
+    #             print("Imposible symbol in title", f"'{i}'")
+    #             str_ = audiofile.tag.title
+    #             audiofile.tag.title = str_.replace(i, '')
+    #             audiofile.tag.save()
+
     if audiofile.tag is None:
-        base = os.path.basename(audiofile_path)
         if not os.path.isdir(f"{folder_with_files}/Исполнитель не определен"):
             os.makedirs(f"{folder_with_files}/Исполнитель не определен")
         os.replace(audiofile_path,
@@ -54,7 +45,6 @@ def create_directory_artist_album(audiofile_path):
             os.replace(audiofile_path,
                        f"{folder_with_files}/{audiofile.tag.artist}/{audiofile.tag.artist}" + " - " + f"{audiofile.tag.title}.mp3")
         else:
-            base = os.path.basename(audiofile_path)
             if not os.path.isdir(f"{folder_with_files}/Исполнитель не определен"):
                 os.makedirs(f"{folder_with_files}/Исполнитель не определен")
             os.replace(audiofile_path,
