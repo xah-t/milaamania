@@ -14,11 +14,11 @@ import re  #match
 
 
 
-audiofile = eyed3.load("C:/python/milaamania/music/Chillstep Deep Night.mp3")
+audiofile = eyed3.load("C:/python/milaamania/music/Foggy – Come Into My Dreams (Radio Edit).mp3")
 pattern_ = '\/:*?"<>|'
-str_ = str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title)
+str_ = str(audiofile.tag.artist + " - " +audiofile.tag.album + "; Album:" + audiofile.tag.title)
 
-print(str)
+print(str_)
 for i in pattern_:
 
     if i in str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title):
