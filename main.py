@@ -1,7 +1,7 @@
 import os
 import eyed3
 import tempfile
-from temp import *
+from creating_lists import *
 
 
 def create_directory_artist_album(audiofile_path):
@@ -54,31 +54,6 @@ def create_directory_artist_album(audiofile_path):
             os.makedirs(f"{folder_with_files}/{audiofile.tag.artist}/{audiofile.tag.album}")
         os.replace(audiofile_path,
                    f"{folder_with_files}/{audiofile.tag.artist}/{audiofile.tag.album}/{audiofile.tag.artist}" + " - " + f"{audiofile.tag.title}.mp3")
-    """
-    - если в тегах нет исполнителя - сохранить в папку исполнитель не найден, имя файла не менять;
-    - если в тегах нет альбома - сохранить в паку с названием исполнителя"""
-    # print(f"Исполнитель: {audiofile.tag.artist}")
-    # print(f"Альбом: {audiofile.tag.album}")
-    # print(f"Альбом: {audiofile.tag.album_artist}")
-    # print(f"Наименование: {audiofile.tag.title}")
-    #audiofile.tag.album = "OST Shchnazzy - Portland 2003"  # присвоить альбому значение str
-    #audiofile.tag.save()
-    #path_artist = os.mkdir(f"C:/python/tests/milaamania/music/{audiofile.tag.artist}")
-    #path_album = "C:/python/milaamania/music"
-    """Настроить проверку наличия директории:
-     - если есть исполнитель - провалиться в неё;
-     - если есть альбом - провалиться в него"""
-
-    # make_album_folder =  os.makedirs(f"{path_album}/{audiofile.tag.artist}/{audiofile.tag.album}")  # if есть директория, то пропустить
-    # print(path_album)
-    #
-    # print(os.listdir(path=path_album))
-
-    """Создать директорию и перенести файл в неё
-    os.makedirs(f"{path_album}/{audiofile.tag.artist}/{audiofile.tag.album}")
-    os.replace(audiofile_path,
-               f"{path_album}/{audiofile.tag.artist}/{audiofile.tag.album}/{audiofile.tag.artist}" + " - " + f"{audiofile.tag.title}.mp3")"""
-    """"""
 
 
 if __name__ == "__main__":
