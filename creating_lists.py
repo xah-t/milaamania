@@ -2,6 +2,7 @@ import os
 import eyed3
 import logging
 import io
+import creating_directory
 
 
 def check_is_mpthree():
@@ -26,7 +27,7 @@ def check_tag(audiofile):
         return True
 
 
-def replacce_imposible_symbols(filename):
+def replace_imposible_symbols(filename):
     """Замена недопустимых символов в имени файла
     Params: filename
     """
@@ -36,7 +37,7 @@ def replacce_imposible_symbols(filename):
     imposible_symbols = "\/:*?<>|"
     for i in imposible_symbols:
         if i in str(audiofile.tag.artist + audiofile.tag.album + audiofile.tag.title):
-            print("Imposible symbol", f"'{i}'")
+            print("Imposible symbol", f"'{i}' in {filename}")
             if i in audiofile.tag.artist:
                 print("Imposible symbol in artist", f"'{i}'")
                 str_ = audiofile.tag.artist
@@ -58,20 +59,21 @@ def create_audiofiles_list(path_to_folder_with_files):
     """Функция создания списка
     Param: path_to_folder_with_files
     """
-    """В цикле проходим по всем файлам в папке и сохранить их названия в список"""
+    """В цикле проходим по всем файлам в папке и сохраняем их названия в список"""
+    #path_to_save = str(path_to_folder_with_files)
     files_list = []
     with os.scandir(path_to_folder_with_files) as files:
         for f in files:
             if os.path.isfile(f):
-                replacce_imposible_symbols(f)
+                replace_imposible_symbols(f)
                 file_name_with_path = f"{path_to_folder_with_files}/{f.name}"
                 files_list.append(file_name_with_path)
-    return files_list
+    return files_list#, path_to_save
 
 
 if __name__ == "__main__":
-    music_path = "D:/Code"
-    #create_audiofiles_list(music_path)
+    music_path = "C:/python/milaamania/music/На разбор"
+    create_audiofiles_list(music_path)
     for i in create_audiofiles_list(music_path):
         print(i)
 
