@@ -4,6 +4,13 @@ import logging
 import io
 
 
+def check_is_mpthree():
+    """Функция проверки типа файла"""
+    """- Не аудиофайлы пропустить;
+    - Аудиофайлы не мп3 сложить в один каталог"""
+    pass
+
+
 def check_tag(audiofile):
     """Подумать Lame tag CRC check failed"""
     base = os.path.basename(audiofile.path)
@@ -20,12 +27,11 @@ def check_tag(audiofile):
 
 
 def replacce_imposible_symbols(filename):
-    # log_stream = io.StringIO()
-    # logging.basicConfig(stream=log_stream, level=logging.INFO)
+    """Замена недопустимых символов в имени файла
+    Params: filename
+    """
+
     audiofile = eyed3.load(filename)
-    # llog = log_stream.getvalue()
-    # if llog:
-    #     log_stream.truncate(0)
     check_tag(audiofile)
     imposible_symbols = "\/:*?<>|"
     for i in imposible_symbols:
@@ -49,7 +55,9 @@ def replacce_imposible_symbols(filename):
 
 
 def create_audiofiles_list(path_to_folder_with_files):
-    """Функция создания списка аудиофайлов"""
+    """Функция создания списка
+    Param: path_to_folder_with_files
+    """
     """В цикле проходим по всем файлам в папке и сохранить их названия в список"""
     files_list = []
     with os.scandir(path_to_folder_with_files) as files:
@@ -62,7 +70,8 @@ def create_audiofiles_list(path_to_folder_with_files):
 
 
 if __name__ == "__main__":
-    music_path = "C:/python/milaamania/music"
+    music_path = "D:/Code"
     #create_audiofiles_list(music_path)
     for i in create_audiofiles_list(music_path):
         print(i)
+
