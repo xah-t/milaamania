@@ -6,15 +6,13 @@ from creating_lists import *
 
 
 def create_path_to_save(audiofiles_path):
+    """Создаёт путь для сохранения файлов и папок после расфасовки.
 
-    """
-    Функция формирования пути для сохранения файлов и папок после расфасовки
-    Params: audiofiles_path
+    Arguments: audiofiles_path
     """
 
     # Разобраться с регуляркой, почему не находит выражение
     pattern = re.compile("[a-zA-Z]:\\((?:.*?\\)*)")
-
     folder_for_saving = re.search(pattern=pattern, string=audiofiles_path)
     #folder_for_saving.group(0)
     #folder_for_saving = pattern.search(audiofiles_path)
@@ -23,11 +21,12 @@ def create_path_to_save(audiofiles_path):
     print(folder_for_saving[0])
 
 
-
 def create_directory_artist_album(audiofile_path):
-    """Функция получения метаданных из аудиофайла
-    Params:audiofile_path
-    audiofile_path:argument"""
+    """Создаёт путь к файлу на основе метаданных аудиофайла.
+
+    Arguments: audiofile_path
+    """
+
     folder_with_files = "C:/python/milaamania/music"
     base = os.path.basename(audiofile_path)
     audiofile = eyed3.load(audiofile_path)

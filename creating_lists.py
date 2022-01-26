@@ -7,7 +7,13 @@ import fleep
 
 
 def check_is_mpthree(filename):
-    """Возвращает True, если тип аудиофайла - .mp3."""
+    """Возвращает True, если тип аудиофайла - .mp3.
+
+    Arguments: filename
+    """
+    #- Не аудиофайлы пропустить;
+    #- Аудиофайлы не мп3 сложить в один каталог - отдельная функция
+
     with open(filename, "rb") as file:
         info = fleep.get(file.read(128))
         if info.extension == ['mp3']:
@@ -15,21 +21,16 @@ def check_is_mpthree(filename):
         else:
             return False
 
-    """
-    - Не аудиофайлы пропустить;
-    - Аудиофайлы не мп3 сложить в один каталог
-    """
-    pass
-
 
 def check_tag(audiofile):
-
     """Инициирует поле тэга, если не существует.
+
+    Arguments: audiofile
 
     Params: default_tag
     """
 
-    """Подумать Lame tag CRC check failed"""
+    #"""Подумать Lame tag CRC check failed"""
     base = os.path.basename(audiofile.path)
     if audiofile.tag is None:
         audiofile.initTag()
@@ -44,10 +45,9 @@ def check_tag(audiofile):
 
 
 def replace_imposible_symbols(filename):
-
     """Заменяет недопустимые символы в имени файла.
 
-    Params: filename
+    Arguments: filename
     """
 
     audiofile = eyed3.load(filename)
@@ -74,9 +74,11 @@ def replace_imposible_symbols(filename):
 
 
 def create_audiofiles_list(path_to_folder_with_files):
-    """Функция создания списка
-    Param: path_to_folder_with_files
+    """Cоздаёт список путей аудиофайлов.
+
+    Arguments: path_to_folder_with_files
     """
+
     """В цикле проходим по всем файлам в папке и сохраняем их названия в список"""
     #path_to_save = str(path_to_folder_with_files)
     files_list = []
