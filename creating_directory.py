@@ -6,16 +6,21 @@ from creating_lists import *
 
 
 def create_path_to_save(audiofiles_path):
-    """Функция формирования пути для сохранения файлов и папок после расфасовки
-    Params: audiofiles_path"""
+
+    """
+    Функция формирования пути для сохранения файлов и папок после расфасовки
+    Params: audiofiles_path
+    """
+
     # Разобраться с регуляркой, почему не находит выражение
-    pattern = re.compile("[a-zA-Z]:\\((?:[a-zA-Z0-9() ]*\\)*)")
-    folder_for_saving = re.match(pattern=pattern, string=audiofiles_path)
-    folder_for_saving.group(0)
+    pattern = re.compile("[a-zA-Z]:\\((?:.*?\\)*)")
+
+    folder_for_saving = re.search(pattern=pattern, string=audiofiles_path)
+    #folder_for_saving.group(0)
     #folder_for_saving = pattern.search(audiofiles_path)
     #re [a - zA - Z]:\\((?:[a-zA-Z0-9() ] *  \\) *).*
     #re [a-zA-Z]:\\((?:.*?\\)*).*
-    print(folder_for_saving)
+    print(folder_for_saving[0])
 
 
 

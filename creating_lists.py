@@ -3,16 +3,32 @@ import eyed3
 import logging
 import io
 import creating_directory
+import fleep
 
 
-def check_is_mpthree():
-    """Функция проверки типа файла"""
-    """- Не аудиофайлы пропустить;
-    - Аудиофайлы не мп3 сложить в один каталог"""
+def check_is_mpthree(filename):
+    """Возвращает True, если тип аудиофайла - .mp3."""
+    with open(filename, "rb") as file:
+        info = fleep.get(file.read(128))
+        if info.extension == ['mp3']:
+            return True
+        else:
+            return False
+
+    """
+    - Не аудиофайлы пропустить;
+    - Аудиофайлы не мп3 сложить в один каталог
+    """
     pass
 
 
 def check_tag(audiofile):
+
+    """Инициирует поле тэга, если не существует.
+
+    Params: default_tag
+    """
+
     """Подумать Lame tag CRC check failed"""
     base = os.path.basename(audiofile.path)
     if audiofile.tag is None:
@@ -28,7 +44,9 @@ def check_tag(audiofile):
 
 
 def replace_imposible_symbols(filename):
-    """Замена недопустимых символов в имени файла
+
+    """Заменяет недопустимые символы в имени файла.
+
     Params: filename
     """
 
